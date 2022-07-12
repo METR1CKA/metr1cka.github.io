@@ -4,9 +4,10 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-* ### 💼 Desarrollador de software junior en SoliduSystems S.A de C.V, México 🇲🇽
+* ### 💼 Desarrollador de software junior en SoliduSystems S.A de C.V
 
-* ### 💻 Estudiante en tecnologias de la informacion. Area desarrollo de software multiplataforma en UTT (Universidad Tecnologica de Torreón)
+* ### 💻 Estudiante en tecnologias de la informacion. Area desarrollo de software multiplataforma en UTT
+    * ### 🇲🇽 Universidad Tecnologica de Torreón
 
 * ### 👨‍🏫 Me apasiona enseñar y aprender
 
