@@ -10,7 +10,7 @@ baseurl: ''
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
-lang: es
+lang: es-ES
 
 # Additional parameters for datetime localization, optional. › https://github.com/iamkun/dayjs/tree/dev/src/locale
 prefer_datetime_locale:
@@ -23,10 +23,10 @@ timezone: America/Monterrey
 
 title: DevBlogs                          # the main title
 
-tagline: Blogs de un junior developer   # it will display as the sub-title
+tagline: Blogs para el conocimiento  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  Blogs minimalistas sobre mi aprendizaje en la programación y en la musica
+  Blogs minimalistas para un publico minimalista
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://metr1cka.github.io'
