@@ -46,7 +46,7 @@ social:
     - https://github.com/METR1CKA # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/fernando-salazar-manzano-777415248/
 
 google_site_verification: # fill in to your verification string
 
@@ -94,9 +94,9 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: METR1CKA/metr1cka.github.io
-    repo_id: R_kgDOHoWSZA
+    repo_id: R_kgDOJ6A8LQ
     category: General
-    category_id: DIC_kwDOHoWSZM4CQP4R
+    category_id: DIC_kwDOJ6A8Lc4CX5RQ
     mapping: pathname # optional, default to 'pathname'
     input_position: bottom # optional, default to 'bottom'
     lang: # optional, default to the value of `site.lang`
