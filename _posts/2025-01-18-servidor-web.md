@@ -7,7 +7,7 @@ tags: [Digital Ocean, VPS, Linux, RockyLinux, Nginx]
 
 ## Introducción
 
-En este artículo te explicaré de forma muy coloquial cómo instalar y configurar Nginx en un VPS de Digital Ocean. Además, veremos cómo instalar PHP, Composer y configurar un proyecto Laravel. También incluiremos configuraciones para proxy y load balancing, y te mostraremos ejemplos de archivos de configuración (como *laravel.conf*, *ssl.conf* y *default.conf*).
+En este artículo te explicaré cómo instalar y configurar Nginx en un VPS de Digital Ocean. Además, veremos cómo instalar PHP, Composer y configurar un proyecto Laravel. También incluiremos configuraciones para proxy y load balancing, y te mostraremos ejemplos de archivos de configuración (como *laravel.conf*, *ssl.conf* y *default.conf*).
 
 ---
 
@@ -22,11 +22,13 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 
 1. **Instalar prerequisitos y crear el repositorio de Nginx:**
 
+   - Instalar los prerequisitos de YUM
    ```console
-   # Instalar los prerequisitos de YUM
    sudo yum install yum-utils
+   ```
 
-   # Crear el archivo de repositorio de Nginx
+   - Crear el archivo de repositorio de Nginx
+   ```console
    nano /etc/yum.repos.d/nginx.repo
    ```
 
@@ -54,11 +56,7 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 3. **Actualizar repositorios e instalar Nginx:**
 
    ```console
-   # Actualizar los repositorios
-   sudo yum update -y
-
-   # Instalar Nginx
-   sudo yum install nginx
+   sudo yum update -y && sudo yum install nginx -y
    ```
 
 ### 1.2 Reiniciar y Habilitar Nginx
@@ -157,7 +155,7 @@ El archivo por defecto se encuentra hecho de esta forma:
 
 ### 1.5 Reiniciar el Servicio de Nginx
 
-Después de modificar la configuración, reinicia el servicio:
+Después de checar la configuración, reinicia el servicio:
 
    ```console
    sudo systemctl restart nginx
@@ -261,17 +259,17 @@ Después de modificar la configuración, reinicia el servicio:
    - **Con NVM (no recomendado):**
 
      ```console
-     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | console
-     source ~/.consolerc
+     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+     source ~/.bashrc
      nvm ls-remote
      nvm install {node-version}
-     source ~/.consolerc
+     source ~/.bashrc
      ```
 
    - **O instalar Node.js usando RPM:**
 
      ```console
-     curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo console -
+     curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
      sudo dnf install nodejs -y
      ```
 
@@ -295,11 +293,13 @@ Después de modificar la configuración, reinicia el servicio:
 
 4. **Instalar dependencias:**
 
+   - Composer
    ```console
-   # Composer
    composer install
+   ```
 
-   # Node.js
+   - Node.js
+   ```console
    npm install
    ```
 
@@ -356,14 +356,18 @@ Después de modificar la configuración, reinicia el servicio:
 
 Verifica los logs para asegurarte de que todo funcione correctamente:
 
+   - Logs de Nginx
    ```console
-   # Logs de Nginx
    sudo tail -f /var/log/nginx/error.log
+   ```
 
-   # Logs de PHP-FPM
+   - Logs de PHP-FPM
+   ```console
    sudo tail -f /var/log/php-fpm/error.log
+   ```
 
-   # Logs del sistema
+   - Logs del sistema
+   ```console
    sudo journalctl -u nginx
    sudo journalctl -u php-fpm
    ```
@@ -396,7 +400,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
        proxy_set_header X-Forwarded-Proto $scheme;
 
-       proxy_pass http://{upstream}$request_uri;
+       proxy_pass http://{upstream-name}$request_uri;
      }
 
      # Redirigir errores del servidor a /50x.html
@@ -430,7 +434,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
 1. **Crear el archivo de configuración `load-balancer.conf`:**
 
-   Crea el archivo `load-balancer.conf` con el siguiente contenido:
+   - Crea el archivo `load-balancer.conf` con el siguiente contenido:
 
    ```nginx
    upstream {upstream-name} {
