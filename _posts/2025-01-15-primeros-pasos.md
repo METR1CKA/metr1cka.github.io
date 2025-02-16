@@ -97,3 +97,6 @@ Ahora ya puedes seguir con la configuración de tu servidor.
 ## Conclusión
 
 En este artículo, hemos visto cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él. SSH es una herramienta poderosa que se utiliza comúnmente para administrar servidores remotos de forma segura. Espero que este artículo te haya sido útil y te haya ayudado a aprender cómo utilizar SSH para acceder a un servidor remoto.
+
+> Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
+{: .prompt-tip }
