@@ -33,7 +33,7 @@ Algunas de las características más destacadas de Digital Ocean son:
 
 Un servidor virtual privado (VPS) es un servidor virtualizado que se ejecuta en un servidor físico compartido con otros servidores virtuales. Cada servidor virtual tiene su propio sistema operativo, recursos y configuración de red, lo que le permite funcionar de forma independiente de los otros servidores virtuales en el mismo servidor físico.
 
-## Como crear un servidor en Digital Ocean
+## Cómo crear un servidor en Digital Ocean
 
 Para crear un servidor en Digital Ocean, sigue los siguientes pasos:
 
@@ -43,7 +43,7 @@ Para crear un servidor en Digital Ocean, sigue los siguientes pasos:
 
 3. **Selecciona la configuración del servidor**: Elige el sistema operativo, la cantidad de memoria, la cantidad de CPU y el espacio de almacenamiento que deseas para tu servidor.
 
-4. **Selecciona la ubicación del servidor**: Elige la ubicación geográfica del servidor entre los diferentes centros de datos de Digital Ocean. La ubicación del servidor puede afectar la latencia y el rendimiento de la aplicación. Lo recomendale es seleccionar la ubicación más cercana a tus usuarios, o la que ofrezca mejores tiempos de respuesta.
+4. **Selecciona la ubicación del servidor**: Elige la ubicación geográfica del servidor entre los diferentes centros de datos de Digital Ocean. La ubicación del servidor puede afectar la latencia y el rendimiento de la aplicación. Lo recomendable es seleccionar la ubicación más cercana a tus usuarios, o la que ofrezca mejores tiempos de respuesta.
 
 5. **Configura las opciones adicionales**: Configura las opciones adicionales como la cantidad de ancho de banda, las etiquetas, las claves SSH y las opciones de copia de seguridad.
 
@@ -77,9 +77,9 @@ Un VPS (Virtual Private Server) es un servidor virtual privado que se ejecuta en
 
 ## Enlace de afiliado
 
-Si estás interesado en probar los servicios de Digital Ocean, puedes registrarte a través de mi enlace de afiliado [aquí](https://m.do.co/c/00a77673dec9).
+Si estás interesado en probar los servicios de Digital Ocean, puedes registrarte a través de este enlace de afiliado [aquí](https://m.do.co/c/00a77673dec9).
 
-> Cabe aclarar que este enlace no es mio, pero si es un enlace legal de afiliado. Perteneciente a un usuario de Digital Ocean.
+> Cabe aclarar que este enlace no es mío, pero sí es un enlace legal de afiliado, perteneciente a un usuario de Digital Ocean.
 {: .prompt-warning}
 
 ## Conclusiones
