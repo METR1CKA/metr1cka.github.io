@@ -75,18 +75,26 @@ Un Firewall es un servicio de seguridad que protege los servidores virtuales en 
 
 Un VPS (Virtual Private Server) es un servidor virtual privado que se ejecuta en un servidor físico compartido con otros servidores virtuales. Cada VPS tiene su propio sistema operativo, recursos y configuración de red, lo que le permite funcionar de forma independiente de los otros servidores virtuales en el mismo servidor físico. Los VPS son una alternativa económica y escalable a los servidores dedicados tradicionales.
 
+## ¿Qué es un Proxy?
+
+Un Proxy es un servidor intermedio que actúa como intermediario entre los clientes y los servidores en una red. Los Proxies permiten a los usuarios ocultar su dirección IP real, acceder a contenido bloqueado geográficamente y mejorar la seguridad y el rendimiento de las conexiones de red. Los Proxies son útiles para navegar de forma anónima por Internet, acceder a sitios web restringidos y proteger la privacidad en línea.
+
+## ¿Qué es un VPN?
+
+Un VPN (Virtual Private Network) es una red privada virtual que se utiliza para proteger la privacidad y la seguridad de las conexiones de red. Los VPNs permiten a los usuarios cifrar sus datos, ocultar su dirección IP real y acceder a contenido bloqueado geográficamente. Los VPNs son útiles para proteger la privacidad en línea, navegar de forma anónima por Internet y acceder a sitios web restringidos.
+
 ## Enlace de afiliado
 
 Si estás interesado en probar los servicios de Digital Ocean, puedes registrarte a través de este enlace de afiliado [aquí](https://m.do.co/c/00a77673dec9).
 
-> Cabe aclarar que este enlace no es mío, pero sí es un enlace legal de afiliado, perteneciente a un usuario de Digital Ocean.
-{: .prompt-warning}
+  > Cabe aclarar que este enlace no es mío, pero sí es un enlace legal de afiliado, perteneciente a un usuario de Digital Ocean.
+  {: .prompt-warning}
 
 ## Conclusiones
 
 Digital Ocean es una excelente opción para aquellos que buscan un servicio de alojamiento web o servidores virtuales en la nube. Con su facilidad de uso, escalabilidad y precios competitivos, Digital Ocean se ha convertido en una de las opciones más populares entre los desarrolladores y empresas de todo el mundo.
 
-> Para más información sobre Digital Ocean, visita su [sitio web](https://www.digitalocean.com/).
->
-> Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
-{: .prompt-tip }
+  > Para más información sobre Digital Ocean, visita su [sitio web](https://www.digitalocean.com/).
+  >
+  > Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
+  {: .prompt-tip }

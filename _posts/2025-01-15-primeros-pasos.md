@@ -9,12 +9,15 @@ tags: [Digital Ocean, VPS, Linux, SSH]
 
 En este artículo, veremos cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él.
 
+  > Se utilizará Digital Ocean como proveedor de servicios en la nube, por lo que se recomienda tener una cuenta en Digital Ocean para poder seguir los tutoriales y ejemplos prácticos. Asimismo, se utilizará RockyLinux 9 como sistema operativo, por lo que se recomienda tener conocimientos básicos de Linux.
+  {: .prompt-info }
+
 ## Conexión a un servidor remoto
 
 Una vez creado el droplet en Digital Ocean, se puede acceder a él utilizando SSH para configurarlo y administrarlo.
 
 ### Windows
-Si lo prefieres, para los usuarios de windows, se puede acceder utilizando Putty, ya hay muchos tutoriales que lo explican. Descarga Putty desde [aquí](https://www.putty.org/).
+Si lo prefieres, para los usuarios de Windows, se puede acceder utilizando Putty, ya hay muchos tutoriales que lo explican. Descarga Putty desde [aquí](https://www.putty.org/).
 
 ### Linux y Mac
 
@@ -33,10 +36,10 @@ O bien puedes crear un archivo de configuración en `~/.ssh/config` y agregar la
 
 ```console
 Host nombre
-    HostName {direccion_ip}
-    User {usuario}
-    Port {puerto}
-    IdentityFile {ruta de la clave privada}
+  HostName {direccion_ip}
+  User {usuario}
+  Port {puerto}
+  IdentityFile {ruta_de_la_clave_privada}
 ```
 
 Luego, puedes acceder al servidor con el siguiente comando:
@@ -53,40 +56,44 @@ Termius es un cliente SSH que permite a los usuarios acceder a servidores remoto
 
 ## Primeros pasos
 
-Una vez que se haya conectado al servidor remoto, debera hacer lo siguiente:
+Una vez que se haya conectado al servidor remoto, deberá hacer lo siguiente:
 
 1. Actualizar los droplets
 
-```console
-sudo dnf update
-sudo dnf upgrade
+    ```console
+    sudo dnf update
+    sudo dnf upgrade
+    ```
 
-dnf update -y && dnf upgrade -y
-```
+    Opcionalmente se puede hacer de esta otra forma:
+
+    ```console
+    dnf update -y && dnf upgrade -y
+    ```
 
 2. Reiniciar
 
-```console
-reboot
-```
+    ```console
+    reboot
+    ```
 
-3. Instalar nano vim y net-tools
+3. Instalar nano, vim y net-tools
 
-```console
-dnf install nano vim net-tools -y
-```
+    ```console
+    dnf install nano vim net-tools -y
+    ```
 
-4. Actualizar despues de instalar
+4. Actualizar después de instalar
 
-```console
-dnf update -y && dnf upgrade -y
-```
+    ```console
+    dnf update -y && dnf upgrade -y
+    ```
 
-Después de realizar estos pasos, debe de seguir estos otros pasos:
+Después de realizar estos pasos, debe seguir estos otros pasos:
 
 1. Apagar el droplet desde el panel de Digital Ocean
 
-2. Aumentar la capacidad de memoria ram desde el panel de digital ocean
+2. Aumentar la capacidad de memoria RAM desde el panel de Digital Ocean
 
 3. Encender el droplet
 
@@ -94,9 +101,12 @@ Después de realizar estos pasos, debe de seguir estos otros pasos:
 
 Ahora ya puedes seguir con la configuración de tu servidor.
 
+  > **Nota:** Es importante tener en cuenta que solo se debe de aumentar la capacidad de memoria RAM para realizar las configuraciones o solo en casos especificos y necesarios, ya que esto puede tener un costo adicional. Lo recomendable es tener un droplet con la capacidad de memoria RAM minima necesaria para el funcionamiento de tu aplicación.
+  {: .prompt-warning }
+
 ## Conclusión
 
 En este artículo, hemos visto cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él. SSH es una herramienta poderosa que se utiliza comúnmente para administrar servidores remotos de forma segura. Espero que este artículo te haya sido útil y te haya ayudado a aprender cómo utilizar SSH para acceder a un servidor remoto.
 
-> Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
-{: .prompt-tip }
+  > Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
+  {: .prompt-tip }
