@@ -117,6 +117,7 @@ deploy() {
 }
 
 main() {
+  rm -rf _site .jekyll-cache .jeckyll-metadata
   init
   build
   test
