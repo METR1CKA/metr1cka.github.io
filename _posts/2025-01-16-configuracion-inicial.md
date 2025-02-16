@@ -1,6 +1,6 @@
 ---
 title: Practica 1 - Configuración Inicial
-date: 2025-01-15
+date: 2025-01-16
 categories: [Digital Ocean, VPS, Linux, RockyLinux, SSH]
 tags: [Digital Ocean, VPS, Linux, RockyLinux, SSH]
 ---
@@ -27,11 +27,13 @@ En este tutorial, vamos a aprender a configurar SSH en dos servidores VPS o drop
    ```console
    Port 55113
    ```
+   {: file='/etc/ssh/sshd_config'}
 
 3. Cambia el puerto para el droplet 2:
    ```console
    Port 60112
    ```
+   {: file='/etc/ssh/sshd_config'}
 
 ### Reiniciar el Servicio SSH
 
@@ -154,7 +156,7 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 2. **Configurar el archivo `sshd_config`:**
 Añade o modifica estas líneas:
 
-   ```console
+   ```bash
    AddressFamily inet
    PermitRootLogin no
    AllowUsers {usuario}
@@ -164,6 +166,7 @@ Añade o modifica estas líneas:
    # Ubicación del archivo de claves:
    AuthorizedKeysFile /home/{usuario}/{ruta_ssh}/authorized_keys
    ```
+   {: file='/etc/ssh/sshd_config'}
 
 3. **Reinicia el servicio SSH:**
    ```console
@@ -212,18 +215,20 @@ Añade o modifica estas líneas:
 1. **Modificar `sshd_config`:**
    En el droplet 1, asegúrate de que SSH escuche en todas las interfaces:
    
-   ```console
+   ```bash
    # Droplet 1
    #ListenAddress 0.0.0.0
    ListenAddress 0.0.0.0
    #ListenAddress ::
    ```
+   {: file='/etc/ssh/sshd_config'}
 
    En el droplet 2, especifica la IP privada:
    
-   ```console
+   ```bash
    ListenAddress {ip_privada_droplet_2}
    ```
+   {: file='/etc/ssh/sshd_config'}
 
 2. **Reinicia el servicio en ambos droplets:**
    ```console
@@ -271,11 +276,12 @@ Añade o modifica estas líneas:
 4. **Configurar PAM para Google Authenticator:**
    Edita `/etc/pam.d/sshd` y reemplaza (o agrega) lo siguiente:
    
-   ```console
+   ```bash
    #auth       substack     password-auth
    auth       required     pam_google_authenticator.so secret=/home/${USER}/{ruta_ssh}/google_authenticator nullok
    auth       required     pam_permit.so
    ```
+   {: file='/etc/pam.d/sshd'}
 
 > El "secret" debe apuntar a la ubicación (absoluta o relativa) del archivo `google_authenticator`.
 {: .prompt-warning }
@@ -283,17 +289,19 @@ Añade o modifica estas líneas:
 5. **Configurar SSH para usar Google Authenticator:**
    - Edita `/etc/ssh/sshd_config.d/50-redhat.conf` y ajusta:
    
-     ```console
+     ```bash
      ChallengeResponseAuthentication yes
      ```
+     {: file='/etc/ssh/sshd_config.d/50-redhat.conf'}
    
    - Luego, en `/etc/ssh/sshd_config`, cambia:
    
-     ```console
+     ```bash
      PasswordAuthentication no
      KbdInteractiveAuthentication yes
      AuthenticationMethods publickey,password publickey,keyboard-interactive
      ```
+     {: file='/etc/ssh/sshd_config'}
 
 6. **Reinicia el servicio SSH y verifica errores:**
    ```console
@@ -309,7 +317,7 @@ Añade o modifica estas líneas:
 
    También puedes configurar un archivo `config` en la carpeta `.ssh`:
    
-   ```console
+   ```bash
    Host *
      ServerAliveInterval 60
 
@@ -319,6 +327,7 @@ Añade o modifica estas líneas:
      User {usuario}
      IdentityFile ~/{ruta_ssh}/nombre_archivo
    ```
+   {: file='~/.ssh/ssh_config'}
 
 ## Configuración Extra
 
@@ -380,7 +389,7 @@ Añade o modifica estas líneas:
 
    Inserta lo siguiente:
    
-   ```console
+   ```bash
    [sshd]
    enabled = true
    filter = sshd
@@ -390,6 +399,7 @@ Añade o modifica estas líneas:
    ignoreip = 127.0.0.1
    logpath = /var/log/auth.log
    ```
+   {: file='sshd.conf'}
 
 5. **Reiniciar Fail2Ban y verificar:**
    ```console
@@ -403,6 +413,8 @@ Añade o modifica estas líneas:
    ```console
    sudo fail2ban-client set sshd unbanip {remote-ip-address}
    ```
+
+---
 
 ## Conclusiones
 
