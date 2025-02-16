@@ -16,7 +16,7 @@ timezone: America/Monterrey
 
 title: METR1CK4 # the main title
 
-tagline: Temas relacionados con la tecnología. # it will display as the sub-title
+tagline: Desarrollador Web Backend y Administrador de Servidores # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Temas relacionados con la tecnología.
