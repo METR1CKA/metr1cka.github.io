@@ -7,7 +7,7 @@ tags: [Digital Ocean, VPS, Linux, SSH]
 
 ## Introducción
 
-**SSH** (Secure Shell) es un protocolo de red que permite a los usuarios acceder de forma segura a un servidor remoto a través de una conexión cifrada. SSH se utiliza comúnmente para administrar servidores remotos de forma segura, ya que proporciona una forma segura de autenticación y cifrado de datos. En este artículo, veremos cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él.
+En este artículo, veremos cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él.
 
 ## Conexión a un servidor remoto
 
