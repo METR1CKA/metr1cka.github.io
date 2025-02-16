@@ -1,3 +1,4 @@
 # !/usr/bin/bash
 
+rm -rf _site .jekyll-cache .jeckyll-metadata
 bundle exec jekyll s --livereload --incremental
