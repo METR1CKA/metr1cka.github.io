@@ -7,7 +7,7 @@ tags: [Digital Ocean, VPS, Linux, RockyLinux, Nginx]
 
 ## Introducción
 
-En este artículo te explicaré de forma muy coloquial cómo instalar y configurar Nginx en un VPS de Digital Ocean. Además, veremos cómo instalar PHP, Composer y configurar un proyecto Laravel. También incluiremos configuraciones para proxy y load balancing, y te mostraremos ejemplos de archivos de configuración (como *laravel.conf*, *ssl.conf* y *default.conf*). ¡Manos a la obra!
+En este artículo te explicaré de forma muy coloquial cómo instalar y configurar Nginx en un VPS de Digital Ocean. Además, veremos cómo instalar PHP, Composer y configurar un proyecto Laravel. También incluiremos configuraciones para proxy y load balancing, y te mostraremos ejemplos de archivos de configuración (como *laravel.conf*, *ssl.conf* y *default.conf*).
 
 ---
 
