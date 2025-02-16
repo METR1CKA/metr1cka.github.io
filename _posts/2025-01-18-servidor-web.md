@@ -1,6 +1,6 @@
 ---
 title: Practica 2 - Configuración de Nginx
-date: 2025-01-15
+date: 2025-01-18
 categories: [Digital Ocean, VPS, Linux, RockyLinux, Nginx]
 tags: [Digital Ocean, VPS, Linux, RockyLinux, Nginx]
 ---
@@ -12,6 +12,9 @@ En este artículo te explicaré de forma muy coloquial cómo instalar y configur
 ---
 
 ## 1. NGINX
+
+**Nginx** es un servidor web de código abierto que se utiliza para servir contenido web estático y dinámico. Es conocido por su alto rendimiento, estabilidad, bajo uso de recursos y configuración sencilla. En este artículo, aprenderemos a instalar y configurar Nginx en un VPS de Digital Ocean.
+
 
 ### 1.1 Instalación de Nginx
 
@@ -29,7 +32,7 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 
 2. **Agregar el siguiente contenido al archivo `nginx.repo`:**
 
-   ```console
+   ```conf
    [nginx-stable]
    name=nginx stable repo
    baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
@@ -46,6 +49,7 @@ Sigue estos pasos para instalar Nginx en tu VPS:
    gpgkey=https://nginx.org/keys/nginx_signing.key
    module_hotfixes=true
    ```
+   {: file='/etc/yum.repos.d/nginx.repo'}
 
 3. **Actualizar repositorios e instalar Nginx:**
 
@@ -103,7 +107,7 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 ### 1.4 Archivo de Configuración Default
 
 El archivo por defecto se encuentra hecho de esta forma:
-   ```console
+   ```nginx
     server {
       listen       80;
       server_name  localhost;
@@ -149,6 +153,7 @@ El archivo por defecto se encuentra hecho de esta forma:
       #}
     }
    ```
+   {: file='/etc/nginx/conf.d/default.conf'}
 
 ### 1.5 Reiniciar el Servicio de Nginx
 
@@ -213,7 +218,7 @@ Después de modificar la configuración, reinicia el servicio:
 
 1. **Editar el archivo `/etc/php.ini`:**
 
-   ```console
+   ```conf
    # Configurar la zona horaria y otros parámetros
    date.timezone = America/Monterrey
    cgi.fix_pathinfo = 0
@@ -222,10 +227,11 @@ Después de modificar la configuración, reinicia el servicio:
    memory_limit = 256M
    upload_max_filesize = 5M
    ```
+   {: file='/etc/php.ini'}
 
 2. **Editar el archivo de PHP-FPM `/etc/php-fpm.d/www.conf`:**
 
-   ```console
+   ```conf
    user = {user}
    group = nginx
 
@@ -235,6 +241,7 @@ Después de modificar la configuración, reinicia el servicio:
 
    security.limit_extensions = .php .php3 .php4 .php5 .php7
    ```
+   {: file='/etc/php-fpm.d/www.conf'}
 
 3. **Reiniciar y habilitar PHP-FPM:**
 
@@ -279,11 +286,12 @@ Después de modificar la configuración, reinicia el servicio:
 
    Copia el archivo `.env.example` a `.env` y ajusta las siguientes variables:
 
-   ```console
+   ```js
    APP_ENV=production
    APP_URL=http://{ip}
    ASSET_URL=http://{ip}
    ```
+   {: file='.env'}
 
 4. **Instalar dependencias:**
 
@@ -370,7 +378,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
    Crea el archivo `proxy.conf` y coloca el siguiente contenido:
 
-   ```console
+   ```nginx
    server {
      listen       {port};
      listen       {[::] o host-ip-pub/priv}:{port};
@@ -400,6 +408,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
      }
    }
    ```
+   {: file='proxy.conf'}
 
 2. **Permitir el tráfico saliente en SELinux para Nginx:**
 
@@ -423,7 +432,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
    Crea el archivo `load-balancer.conf` con el siguiente contenido:
 
-   ```console
+   ```nginx
    upstream {upstream-name} {
      least_conn;
      server {ip-1/host}:{port};
@@ -432,6 +441,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
      server {ip-4/host}:{port} backup;
    }
    ```
+   {: file='load-balancer.conf'}
 
 2. **Reiniciar Nginx:**
 
@@ -447,7 +457,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
 Utiliza este archivo para configurar Nginx con un proyecto Laravel. Crea el archivo `laravel.conf` con el siguiente contenido:
 
-   ```console
+   ```nginx
    server {
      listen        {port};
      listen        {[::] o host-ip-pub/priv}:{port};
@@ -493,12 +503,13 @@ Utiliza este archivo para configurar Nginx con un proyecto Laravel. Crea el arch
      }
    }
    ```
+   {: file='laravel.conf'}
 
 ### 6.2 ssl.conf
 
 Crea el archivo `ssl.conf` para configurar SSL:
 
-   ```console
+   ```nginx
    server {
      listen        443 ssl http2;
      listen        [::]:443 ssl http2;
@@ -508,47 +519,9 @@ Crea el archivo `ssl.conf` para configurar SSL:
      ssl_certificate_key /etc/nginx/ssl/private_key.pem;
    }
    ```
+   {: file='ssl.conf'}
 
-### 6.3 default.conf
-
-Este es el archivo de configuración por defecto de Nginx. Ubícalo en `default.conf`:
-
-   ```console
-   server {
-     listen       80;
-     server_name  localhost;
-
-     # access_log  /var/log/nginx/host.access.log  main;
-
-     location / {
-       root   /usr/share/nginx/html;
-       index  index.html index.htm;
-     }
-
-     # error_page  404              /404.html;
-
-     # Redirigir errores del servidor a /50x.html
-     error_page   500 502 503 504  /50x.html;
-
-     location = /50x.html {
-       root   /usr/share/nginx/html;
-     }
-
-     # Ejemplo de configuración para PHP con FastCGI (comentado)
-     # location ~ \.php$ {
-     #     root           html;
-     #     fastcgi_pass   127.0.0.1:9000;
-     #     fastcgi_index  index.php;
-     #     fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-     #     include        fastcgi_params;
-     # }
-     
-     # Denegar acceso a archivos ocultos como .htaccess
-     # location ~ /\.ht {
-     #     deny  all;
-     # }
-   }
-   ```
+---
 
 ## Conclusiones
 
