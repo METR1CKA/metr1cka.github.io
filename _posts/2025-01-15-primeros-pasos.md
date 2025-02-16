@@ -9,8 +9,8 @@ tags: [Digital Ocean, VPS, Linux, SSH]
 
 En este artículo, veremos cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él.
 
-  > Se utilizará Digital Ocean como proveedor de servicios en la nube, por lo que se recomienda tener una cuenta en Digital Ocean para poder seguir los tutoriales y ejemplos prácticos. Asimismo, se utilizará RockyLinux 9 como sistema operativo, por lo que se recomienda tener conocimientos básicos de Linux.
-  {: .prompt-info }
+> Se utilizará Digital Ocean como proveedor de servicios en la nube, por lo que se recomienda tener una cuenta en Digital Ocean para poder seguir los tutoriales y ejemplos prácticos. Asimismo, se utilizará RockyLinux 9 como sistema operativo, por lo que se recomienda tener conocimientos básicos de Linux.
+{: .prompt-info }
 
 ## Conexión a un servidor remoto
 
@@ -101,12 +101,12 @@ Después de realizar estos pasos, debe seguir estos otros pasos:
 
 Ahora ya puedes seguir con la configuración de tu servidor.
 
-  > **Nota:** Es importante tener en cuenta que solo se debe de aumentar la capacidad de memoria RAM para realizar las configuraciones o solo en casos especificos y necesarios, ya que esto puede tener un costo adicional. Lo recomendable es tener un droplet con la capacidad de memoria RAM minima necesaria para el funcionamiento de tu aplicación.
-  {: .prompt-warning }
+> **Nota:** Es importante tener en cuenta que solo se debe de aumentar la capacidad de memoria RAM para realizar las configuraciones o solo en casos especificos y necesarios, ya que esto puede tener un costo adicional. Lo recomendable es tener un droplet con la capacidad de memoria RAM minima necesaria para el funcionamiento de tu aplicación.
+{: .prompt-warning }
 
 ## Conclusión
 
 En este artículo, hemos visto cómo utilizar SSH para acceder a un servidor remoto y ejecutar comandos en él. SSH es una herramienta poderosa que se utiliza comúnmente para administrar servidores remotos de forma segura. Espero que este artículo te haya sido útil y te haya ayudado a aprender cómo utilizar SSH para acceder a un servidor remoto.
 
-  > Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
-  {: .prompt-tip }
+> Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
+{: .prompt-tip }

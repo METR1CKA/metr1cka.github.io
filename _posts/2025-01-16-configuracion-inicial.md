@@ -1,5 +1,5 @@
 ---
-title: Practica 1 - Configuración Inicial
+title: Práctica 1 - Configuración Inicial
 date: 2025-01-16
 categories: [Digital Ocean, VPS, Linux, RockyLinux, SSH]
 tags: [Digital Ocean, VPS, Linux, RockyLinux, SSH]
@@ -9,12 +9,12 @@ tags: [Digital Ocean, VPS, Linux, RockyLinux, SSH]
 
 **SSH** (Secure Shell) es un protocolo de red que permite acceder de forma segura a un servidor remoto mediante una conexión cifrada. Se utiliza habitualmente para administrar servidores de manera segura, ofreciendo autenticación y cifrado de datos. En este artículo veremos cómo configurar SSH en dos servidores VPS (o droplets) de DigitalOcean, configurando diferentes puertos de escucha y siguiendo buenas prácticas de seguridad.
 
-> Nota: Recuerda que el comando `sudo` se utiliza para ejecutar acciones que requieren privilegios elevados. No es necesario usarlo siempre, solo cuando no seas usuario root o no tengas privilegios suficientes (por ejemplo, si no estás en el grupo sudo/wheel).
-{: .prompt-warning }
-
 ## Configuración de SSH
 
 En este tutorial, vamos a aprender a configurar SSH en dos servidores VPS o droplets de **DigitalOcean**, específicamente para permitir conexiones SSH en puertos diferentes para cada servidor, mejorando así la seguridad al evitar ataques de fuerza bruta.
+
+> **Nota:** Antes de realizar esta configuración, si deseas integrar protección de firewall interno y baneo de ips, deberas de consultar el artículo de [Configuraciones Adicionales](https://metr1cka.github.io/posts/extras/), ya que antes de cambiar los puertos de SSH deberas configurar dichos apartados. De no ser así, podrías quedar bloqueado de tu servidor.
+{: .prompt-warning }
 
 ### Cambio de Puertos
 
@@ -76,95 +76,98 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
    passwd {usuario}
    ```
 
-3. **(Opcional) Borrar un usuario:**
-   ```console
-   userdel -r {usuario}
-   ```
-
-4. **(Opcional) Agregar el usuario al grupo `wheel` para usar `sudo`:**
-   ```console
-   gpasswd -a {usuario} wheel
-   ```
-
-5. **Eliminar el usuario del grupo `wheel`:**
-   ```console
-   gpasswd -d {usuario} wheel
-   ```
-
-6. **Asignar el directorio home (opcional):**
-   ```console
-   chown -R {usuario}:{usuario} /home/{usuario}
-   ```
-
-7. **Cambiar al usuario para probar el acceso:**
+3. **Cambiar al usuario para probar el acceso:**
    ```console
    su {usuario}
    ```
 
-8. **Ir al directorio home:**
+4. **Ir al directorio home:**
    ```console
    cd
    ```
 
-9. **Salir del usuario:**
+5. **Salir del usuario:**
    ```console
    exit
    ```
 
-> Configura los accesos y demás ajustes con root; los usuarios creados solo podrán conectarse por SSH.
+6. **Comandos extras y/o opcionales**
+
+    - **Borrar un usuario:**
+    ```console
+    userdel -r {usuario}
+    ```
+
+    - **Agregar el usuario al grupo `wheel` para usar `sudo`:**
+    ```console
+    gpasswd -a {usuario} wheel
+    ```
+
+    - **Eliminar el usuario del grupo `wheel`:**
+    ```console
+    gpasswd -d {usuario} wheel
+    ```
+
+    - **Asignar el directorio home:**
+    ```console
+    chown -R {usuario}:{usuario} /home/{usuario}
+    ```
+
+> Configura los accesos y demás ajustes con root; los usuarios creados solo podrán conectarse por SSH. Se debera crear un usuario para acceso SSH y otro con permisos de sudo para cada droplet.
 {: .prompt-warning }
 
 ## Configuración de la Carpeta .SSH y Acceso entre Droplets
 
 1. **Crear la carpeta `.ssh` y el archivo `authorized_keys` en ambos droplets:**
 
-   Puedes crear la carpeta de forma personalizada dentro del directorio home del usuario:
-
-   
+   - Puedes crear la carpeta de `.ssh` dentro del directorio home del usuario:
    ```console
-   # (Opcional) Crear una carpeta personalizada
-   mkdir ~/{carpeta}
-   cd ~/{carpeta}
-
-   # Crear la carpeta .ssh y entrar en ella
-   mkdir .ssh
-   cd .ssh
-
-   # Crear el archivo authorized_keys
-   touch authorized_keys
+   mkdir ~/.ssh
+   cd ~/.ssh
    ```
 
-   Otra opción es copiar el archivo de root:
-   
+   - Otra opción es crear la carpeta de forma personalizada dentro del directorio home del usuario (no recomendado):
+   ```console
+   mkdir ~/{carpeta-personalizada}
+   cd ~/{carpeta-personalizada}
+   mkdir .ssh
+   cd .ssh
+   ```
+
+   - Luego crear el archivo `authorized_keys` y copiar la clave pública del usuario:
+   ```console
+   touch authorized_keys
+   ```
+   {: file='~/ruta_ssh/'}
+
+   - Una opción es asignar el contenido del archivo `authorized_keys` de root al que acabas de crear:
    ```console
    cat /root/.ssh/authorized_keys > ~/{ruta_ssh}/authorized_keys
    ```
-   
-   O:
-   
+
+   - O copiar el archivo `authorized_keys` de root al nuevo usuario y ajustar los permisos:
    ```console
    cp /root/.ssh/authorized_keys ~/{ruta_ssh}/authorized_keys
    ```
-   
-   Asigna los permisos adecuados:
-   
+
+   - Asigna los permisos adecuados:
    ```console
    chmod 700 -R ~/{ruta_ssh}
    chmod 600 ~/{ruta_ssh}/authorized_keys
    ```
 
 2. **Configurar el archivo `sshd_config`:**
-Añade o modifica estas líneas:
 
+   Añade o modifica estas líneas:
    ```bash
    AddressFamily inet
    PermitRootLogin no
-   AllowUsers {usuario}
+   AllowUsers {usuario-creado-para-ssh}
    MaxAuthTries 3
    MaxSessions 3
 
    # Ubicación del archivo de claves:
-   AuthorizedKeysFile /home/{usuario}/{ruta_ssh}/authorized_keys
+   AuthorizedKeysFile /home/{usuario-creado-para-ssh}/{ruta_ssh}/authorized_keys
    ```
    {: file='/etc/ssh/sshd_config'}
 
@@ -176,32 +179,43 @@ Añade o modifica estas líneas:
 ## Creación de Llaves SSH
 
 1. **Generar la llave SSH en el droplet 1:**
+
+   - Ingresa al usuario creado:
    ```console
-   # Cambiar al usuario creado
    su {usuario}
+   ```
 
-   # Generar la llave con nombre personalizado o usar la ruta por defecto
+   - **(Opcional)** Genera la llave con nombre personalizado:
+   ```console
    ssh-keygen -f {ruta_ssh/nombre_archivo} -C "{tu-comentario}"
-   # O para usar la ruta por defecto:
+   ```
+
+   - Genera la llave por defecto:
+   ```console
    ssh-keygen -C "{tu-comentario}"
+   ```
 
-   # Salir del usuario
+   - Sal de la sesión del usuario y ajusta los permisos:
+   ```console
    exit
-
-   # Ajustar permisos (como root)
    chmod 644 ~/{ruta_ssh}/nombre_archivo.pub
    chmod 600 ~/{ruta_ssh}/nombre_archivo
    ```
 
 2. **Copiar la llave pública al droplet 2:**
+
+   - Ingresa al usuario creado:
    ```console
-   # Cambiar al usuario creado
    su {usuario}
+   ```
 
-   # Usar ssh-copy-id para copiar la llave
+   - **(Opcional)** Usar ssh-copy-id para copiar la llave
+   ```console
    ssh-copy-id -i ~/{ruta_ssh}/nombre_archivo.pub {usuario}@{ip_privada_droplet_2}
+   ```
 
-   # O copiar manualmente:
+   - O copiar manualmente, ejecuta cat para mostrar la llave y copia el contenido:
+   ```console
    cat {ruta_ssh}/nombre_archivo.pub
    ```
 
@@ -213,18 +227,16 @@ Añade o modifica estas líneas:
 ## Configuración del Acceso SSH entre Droplets
 
 1. **Modificar `sshd_config`:**
-   En el droplet 1, asegúrate de que SSH escuche en todas las interfaces:
-   
+
+   - En el droplet 1, asegúrate de que SSH escuche en todas las interfaces:
    ```bash
-   # Droplet 1
    #ListenAddress 0.0.0.0
    ListenAddress 0.0.0.0
    #ListenAddress ::
    ```
    {: file='/etc/ssh/sshd_config'}
 
-   En el droplet 2, especifica la IP privada:
-   
+   - En el droplet 2, especifica la IP privada:
    ```bash
    ListenAddress {ip_privada_droplet_2}
    ```
@@ -237,12 +249,15 @@ Añade o modifica estas líneas:
 
 ## Configuración de Google Authenticator
 
+> **Nota:** Antes de continuar, asegúrate de haber aumentado la capacidad RAM a 2GB, ya que de no ser así, la instalación podría fallar y arrojar un mensaje de error como por ejemplo: `Killed`, a causa de la falta de memoria. También asegúrate de tener instalado Google Authenticator en tu dispositivo móvil.
+{: .prompt-warning }
+
 1. **Instalar las dependencias necesarias:**
    ```console
-   # Instalar EPEL
-   dnf install epel-release
+   dnf install epel-release && dnf update -y
+   ```
 
-   # Instalar google-authenticator y qrencode
+   ```console
    dnf install google-authenticator qrencode qrencode-libs
    ```
 
@@ -258,24 +273,29 @@ Añade o modifica estas líneas:
    - ¿Aumentar la ventana de tiempo? (responde: n)
    - ¿Habilitar rate-limiting? (responde: y)
 
-> Realiza la autenticación de Google Authenticator solo una vez por usuario. Si se vuelve a ejecutar, deberás crear otro usuario y borrar el anterior.
-{: .prompt-warning }
+    > Es recomendable realizarla solo una vez por usuario, aunque no hay problema si eliminas el archivo `google_authenticator` y lo vuelves a generar. Verifica que SELinux no esté bloqueando el acceso a la carpeta `.ssh`.
+    {: .prompt-warning }
 
 3. **Realizar respaldos y ajustar SELinux:**
+
+   - Restaurar el contexto de SELinux en la carpeta .ssh
    ```console
-   # Restaurar el contexto de SELinux en la carpeta .ssh
    restorecon -Rv ~/{ruta_ssh}/
+   ```
 
-   # Respaldar el archivo PAM para sshd
+   - Respaldar el archivo PAM para sshd
+   ```console
    cp /etc/pam.d/sshd /etc/pam.d/sshd.bak
+   ```
 
-   # Respaldar sshd_config
+   - Respaldar sshd_config
+   ```console
    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
    ```
 
 4. **Configurar PAM para Google Authenticator:**
-   Edita `/etc/pam.d/sshd` y reemplaza (o agrega) lo siguiente:
-   
+
+   - Edita `/etc/pam.d/sshd` y reemplaza (o agrega) lo siguiente:
    ```bash
    #auth       substack     password-auth
    auth       required     pam_google_authenticator.so secret=/home/${USER}/{ruta_ssh}/google_authenticator nullok
@@ -283,12 +303,11 @@ Añade o modifica estas líneas:
    ```
    {: file='/etc/pam.d/sshd'}
 
-> El "secret" debe apuntar a la ubicación (absoluta o relativa) del archivo `google_authenticator`.
-{: .prompt-warning }
+    > El **"secret"** debe apuntar a la ubicación (absoluta o relativa) del archivo `google_authenticator`.
+    {: .prompt-warning }
 
 5. **Configurar SSH para usar Google Authenticator:**
    - Edita `/etc/ssh/sshd_config.d/50-redhat.conf` y ajusta:
-   
      ```bash
      ChallengeResponseAuthentication yes
      ```
@@ -309,14 +328,13 @@ Añade o modifica estas líneas:
    ```
 
 7. **Prueba el acceso SSH con Google Authenticator:**
+
    Una vez autenticado, prueba la conexión al droplet 2:
-   
    ```console
    ssh {usuario}@{ip_privada_droplet_2} -p {puerto_ssh_droplet_2} -i ~/{ruta_ssh}/nombre_archivo
    ```
 
    También puedes configurar un archivo `config` en la carpeta `.ssh`:
-   
    ```bash
    Host *
      ServerAliveInterval 60
@@ -329,96 +347,11 @@ Añade o modifica estas líneas:
    ```
    {: file='~/.ssh/ssh_config'}
 
-## Configuración Extra
-
-### Firewall
-
-1. **Instalar y habilitar firewalld:**
-   ```console
-   sudo dnf install firewalld -y
-   sudo systemctl enable firewalld
-   sudo systemctl start firewalld
-   ```
-
-2. **Remover servicios por defecto:**
-   ```console
-   sudo firewall-cmd --zone=public --remove-service=cockpit --permanent
-   sudo firewall-cmd --zone=public --remove-service=ssh --permanent
-   sudo firewall-cmd --zone=public --remove-service=dhcpv6-client --permanent
-   ```
-
-3. **Agregar servicios personalizados:**
-   ```console
-   sudo firewall-cmd --zone=public --add-port={port}/tcp --permanent
-   sudo firewall-cmd --zone=public --add-service=http --permanent
-   sudo firewall-cmd --zone=public --add-service=https --permanent
-   ```
-
-4. **Recargar reglas y verificar:**
-   ```console
-   sudo firewall-cmd --reload
-   sudo firewall-cmd --state
-   sudo firewall-cmd --list-all
-   ```
-
-### Añadir Fail2Ban
-
-1. **Instalar Fail2Ban:**
-   ```console
-   dnf install epel-release -y
-   dnf install fail2ban -y
-   ```
-
-2. **Habilitar y verificar el servicio:**
-   ```console
-   systemctl enable fail2ban.service
-   systemctl status fail2ban.service
-   ```
-
-3. **Configurar Fail2Ban:**
-   ```console
-   cd /etc/fail2ban
-   cp jail.conf jail.local
-   cd jail.d
-   ```
-
-4. **Editar el archivo de configuración para sshd:**
-   ```console
-   nano sshd.conf
-   ```
-
-   Inserta lo siguiente:
-   
-   ```bash
-   [sshd]
-   enabled = true
-   filter = sshd
-   port = {puerto_ssh}
-   bantime = 21600
-   maxretry = 3
-   ignoreip = 127.0.0.1
-   logpath = /var/log/auth.log
-   ```
-   {: file='sshd.conf'}
-
-5. **Reiniciar Fail2Ban y verificar:**
-   ```console
-   fail2ban-client status sshd
-   fail2ban-client status
-   service fail2ban restart
-   fail2ban-client status sshd
-   ```
-
-6. **Para desbanear una IP:**
-   ```console
-   sudo fail2ban-client set sshd unbanip {remote-ip-address}
-   ```
-
 ---
 
 ## Conclusiones
 
-En este tutorial, hemos configurado SSH en dos servidores VPS de DigitalOcean, cambiando los puertos de escucha y siguiendo buenas prácticas de seguridad. También hemos creado usuarios, configurado la carpeta `.ssh` y el acceso entre droplets, y configurado Google Authenticator para autenticación de dos factores. Finalmente, hemos añadido reglas de firewall y configurado Fail2Ban para proteger los servidores de ataques de fuerza bruta.
+En este tutorial, hemos configurado SSH en dos servidores VPS de DigitalOcean, cambiando los puertos de escucha y siguiendo buenas prácticas de seguridad. También hemos creado usuarios, configurado la carpeta `.ssh` y el acceso entre droplets, y configurado Google Authenticator para autenticación de dos factores del primer droplet, puedes integrar eso mismo al segundo si gustas.
 
 > Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
 {: .prompt-tip }

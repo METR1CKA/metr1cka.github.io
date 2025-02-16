@@ -87,14 +87,14 @@ Un VPN (Virtual Private Network) es una red privada virtual que se utiliza para 
 
 Si estás interesado en probar los servicios de Digital Ocean, puedes registrarte a través de este enlace de afiliado [aquí](https://m.do.co/c/00a77673dec9).
 
-  > Cabe aclarar que este enlace no es mío, pero sí es un enlace legal de afiliado, perteneciente a un usuario de Digital Ocean.
-  {: .prompt-warning}
+> Cabe aclarar que este enlace no es mío, pero sí es un enlace legal de afiliado, perteneciente a un usuario de Digital Ocean.
+{: .prompt-warning}
 
 ## Conclusiones
 
 Digital Ocean es una excelente opción para aquellos que buscan un servicio de alojamiento web o servidores virtuales en la nube. Con su facilidad de uso, escalabilidad y precios competitivos, Digital Ocean se ha convertido en una de las opciones más populares entre los desarrolladores y empresas de todo el mundo.
 
-  > Para más información sobre Digital Ocean, visita su [sitio web](https://www.digitalocean.com/).
-  >
-  > Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
-  {: .prompt-tip }
+> Para más información sobre Digital Ocean, visita su [sitio web](https://www.digitalocean.com/).
+>
+> Cualquier duda o comentario, agregarla en la sección de comentarios abajo de cada publicación.
+{: .prompt-tip }
