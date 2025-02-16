@@ -1,6 +1,6 @@
 ---
 title: Digital Ocean
-date: 2025-02-15 12:19:00
+date: 2025-01-12
 categories: [Digital Ocean, VPS]
 tags: [Digital Ocean, VPS]
 ---
@@ -29,6 +29,10 @@ Algunas de las características más destacadas de Digital Ocean son:
 
 8. **Red global de centros de datos**: Digital Ocean cuenta con una red global de centros de datos que permite a los usuarios desplegar servidores virtuales en diferentes ubicaciones geográficas.
 
+## ¿Qué es un servidor virtual privado (VPS)?
+
+Un servidor virtual privado (VPS) es un servidor virtualizado que se ejecuta en un servidor físico compartido con otros servidores virtuales. Cada servidor virtual tiene su propio sistema operativo, recursos y configuración de red, lo que le permite funcionar de forma independiente de los otros servidores virtuales en el mismo servidor físico.
+
 ## Como crear un servidor en Digital Ocean
 
 Para crear un servidor en Digital Ocean, sigue los siguientes pasos:
@@ -46,6 +50,30 @@ Para crear un servidor en Digital Ocean, sigue los siguientes pasos:
 6. **Crea el servidor**: Haz clic en el botón "Create Droplet" para crear el servidor. Una vez creado, recibirás un correo electrónico con la información de acceso al servidor.
 
 7. **Accede al servidor**: Utiliza un cliente SSH para acceder al servidor y configurar la aplicación que deseas desplegar.
+
+## ¿Qué es un Droplet?
+
+Un Droplet es el nombre que Digital Ocean le da a sus servidores virtuales en la nube. Cada Droplet es un servidor virtual privado que se ejecuta en un servidor físico compartido con otros Droplets. Los Droplets de Digital Ocean son altamente escalables y se pueden personalizar con diferentes sistemas operativos, recursos y configuraciones de red.
+
+## ¿Qué es un Snapshot?
+
+Un Snapshot es una copia de seguridad instantánea de un Droplet en Digital Ocean. Los Snapshots permiten a los usuarios crear una imagen del estado actual de su Droplet, incluyendo el sistema operativo, la configuración de red y los datos almacenados en el servidor. Los Snapshots son útiles para realizar copias de seguridad, clonar servidores y restaurar servidores en caso de fallos.
+
+## ¿Qué es un Volume?
+
+Un Volume es un disco de almacenamiento adicional que se puede añadir a un Droplet en Digital Ocean. Los Volumes permiten a los usuarios aumentar el espacio de almacenamiento de su servidor virtual sin tener que migrar a un servidor más grande. Los Volumes son útiles para almacenar grandes cantidades de datos, como bases de datos, archivos multimedia y copias de seguridad.
+
+## ¿Qué es un Load Balancer?
+
+Un Load Balancer es un servicio que distribuye el tráfico de red entre varios servidores virtuales en Digital Ocean. Los Load Balancers permiten a los usuarios mejorar la disponibilidad y el rendimiento de sus aplicaciones al distribuir la carga de trabajo entre varios servidores. Los Load Balancers son útiles para aplicaciones web de alta disponibilidad y alto tráfico.
+
+## ¿Qué es un Firewall?
+
+Un Firewall es un servicio de seguridad que protege los servidores virtuales en Digital Ocean contra ataques maliciosos y accesos no autorizados. Los Firewalls permiten a los usuarios configurar reglas de seguridad para controlar el tráfico de red entrante y saliente en sus servidores. Los Firewalls son útiles para proteger las aplicaciones web y los datos sensibles de los usuarios.
+
+## ¿Qué es un VPS?
+
+Un VPS (Virtual Private Server) es un servidor virtual privado que se ejecuta en un servidor físico compartido con otros servidores virtuales. Cada VPS tiene su propio sistema operativo, recursos y configuración de red, lo que le permite funcionar de forma independiente de los otros servidores virtuales en el mismo servidor físico. Los VPS son una alternativa económica y escalable a los servidores dedicados tradicionales.
 
 ## Enlace de afiliado
 
