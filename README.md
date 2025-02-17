@@ -1,4 +1,4 @@
-# Bienvenidos a mis DevBlogs
+# My Blog
 
 [METR1CKA](https://metr1cka.github.io "Home")
 
