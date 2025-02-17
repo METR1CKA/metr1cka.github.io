@@ -15,6 +15,9 @@ En este artículo te explicaré cómo instalar y configurar Nginx en un VPS de D
 
 **Nginx** es un servidor web de código abierto que se utiliza para servir contenido web estático y dinámico. Es conocido por su alto rendimiento, estabilidad, bajo uso de recursos y configuración sencilla. En este artículo, aprenderemos a instalar y configurar Nginx en un VPS de Digital Ocean.
 
+> Documentación oficial de [Nginx](https://nginx.org/en/linux_packages.html#RHEL){:target="_blank"}.
+{: .prompt-tip }
+
 
 ### 1.1 Instalación de Nginx
 
@@ -23,12 +26,12 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 1. **Instalar prerequisitos y crear el repositorio de Nginx:**
 
    - Instalar los prerequisitos de YUM
-   ```console
+   ```bash
    sudo yum install yum-utils
    ```
 
    - Crear el archivo de repositorio de Nginx
-   ```console
+   ```bash
    nano /etc/yum.repos.d/nginx.repo
    ```
 
@@ -55,7 +58,7 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 
 3. **Actualizar repositorios e instalar Nginx:**
 
-   ```console
+   ```bash
    sudo yum update -y && sudo yum install nginx -y
    ```
 
@@ -63,21 +66,21 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 
 1. **Verificar el estado del servicio:**
 
-   ```console
+   ```bash
    sudo systemctl status nginx
    sudo service nginx status
    ```
 
 2. **Iniciar el servicio:**
 
-   ```console
+   ```bash
    sudo systemctl start nginx
    sudo service nginx start
    ```
 
 3. **Habilitar Nginx para que inicie con el sistema:**
 
-   ```console
+   ```bash
    sudo systemctl enable nginx
    sudo service nginx enable
    ```
@@ -86,19 +89,19 @@ Sigue estos pasos para instalar Nginx en tu VPS:
 
 1. **Mostrar conexiones activas:**
 
-   ```console
+   ```bash
    sudo netstat -ptona
    ```
 
 2. **Verificar conexión en un puerto específico:**
 
-   ```console
+   ```bash
    sudo netstat -tuln | grep {puerto}
    ```
 
 3. **Cambiar el puerto de escucha de Nginx (si es necesario):**
 
-   ```console
+   ```bash
    sudo semanage port -a -t http_port_t -p tcp {port}
    ```
 
@@ -157,7 +160,7 @@ El archivo por defecto se encuentra hecho de esta forma:
 
 Después de checar la configuración, reinicia el servicio:
 
-   ```console
+   ```bash
    sudo systemctl restart nginx
    sudo service nginx restart
 
@@ -179,7 +182,7 @@ Después de checar la configuración, reinicia el servicio:
 
 1. **Actualizar repositorios e instalar repositorios adicionales:**
 
-   ```console
+   ```bash
    sudo dnf update -y
    sudo dnf install epel-release -y
    sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
@@ -187,26 +190,26 @@ Después de checar la configuración, reinicia el servicio:
 
 2. **Resetear y habilitar el módulo de PHP (ejemplo con PHP 8.2):**
 
-   ```console
+   ```bash
    sudo dnf module list reset php -y
    sudo dnf module enable php:remi-8.2
    ```
 
 3. **Instalar PHP y extensiones necesarias:**
 
-   ```console
+   ```bash
    sudo dnf install php php-common php-xml php-json curl unzip php-fpm php-mysqlnd php-opcache php-gd php-pgsql php-mbstring php-zip -y
    ```
 
 4. **Actualizar cache de repositorios:**
 
-   ```console
+   ```bash
    sudo dnf makecache
    ```
 
 5. **Instalar Composer:**
 
-   ```console
+   ```bash
    sudo curl -sS https://getcomposer.org/installer | php
    sudo mv composer.phar /usr/local/bin/composer
    sudo chmod +x /usr/local/bin/composer
@@ -243,7 +246,7 @@ Después de checar la configuración, reinicia el servicio:
 
 3. **Reiniciar y habilitar PHP-FPM:**
 
-   ```console
+   ```bash
    sudo systemctl start php-fpm
    sudo systemctl enable php-fpm
    ```
@@ -258,7 +261,7 @@ Después de checar la configuración, reinicia el servicio:
 
    - **Con NVM (no recomendado):**
 
-     ```console
+     ```bash
      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
      source ~/.bashrc
      nvm ls-remote
@@ -268,14 +271,14 @@ Después de checar la configuración, reinicia el servicio:
 
    - **O instalar Node.js usando RPM:**
 
-     ```console
+     ```bash
      curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
      sudo dnf install nodejs -y
      ```
 
 2. **Clonar el repositorio de Laravel:**
 
-   ```console
+   ```bash
    sudo dnf install git unzip -y
    git clone {repo}
    ```
@@ -294,25 +297,25 @@ Después de checar la configuración, reinicia el servicio:
 4. **Instalar dependencias:**
 
    - Composer
-   ```console
+   ```bash
    composer install
    ```
 
    - Node.js
-   ```console
+   ```bash
    npm install
    ```
 
 5. **Optimizar y generar la key de Laravel:**
 
-   ```console
+   ```bash
    php artisan optimize:clear
    php artisan key:generate
    ```
 
 6. **Construir los archivos de Node.js:**
 
-   ```console
+   ```bash
    npm run build
    ```
 
@@ -320,33 +323,33 @@ Después de checar la configuración, reinicia el servicio:
 
 1. **Asignar permisos adecuados:**
 
-   ```console
+   ```bash
    sudo chmod 750 /home/{user}
    sudo chown -R {user}:nginx /home/{user}
    ```
 
 2. **Habilitar el acceso a la red para el usuario de Nginx:**
 
-   ```console
+   ```bash
    sudo setsebool -P httpd_can_network_connect on
    ```
 
 3. **Ajustar etiquetas de SELinux para el proyecto Laravel:**
 
-   ```console
+   ```bash
    sudo chcon -R -t httpd_sys_rw_content_t /home/{user}/{project-laravel-folder}
    ```
 
 4. **Reiniciar servicios:**
 
-   ```console
+   ```bash
    sudo systemctl restart nginx
    sudo systemctl restart php-fpm
    ```
 
 5. **Ajustar permisos finales en el proyecto:**
 
-   ```console
+   ```bash
    sudo chmod -R 750 /home/{user}/{project-laravel-folder}
    sudo chmod -R 770 /home/{user}/{project-laravel-folder}/storage
    sudo chmod -R 770 /home/{user}/{project-laravel-folder}/bootstrap/cache
@@ -357,17 +360,17 @@ Después de checar la configuración, reinicia el servicio:
 Verifica los logs para asegurarte de que todo funcione correctamente:
 
    - Logs de Nginx
-   ```console
+   ```bash
    sudo tail -f /var/log/nginx/error.log
    ```
 
    - Logs de PHP-FPM
-   ```console
+   ```bash
    sudo tail -f /var/log/php-fpm/error.log
    ```
 
    - Logs del sistema
-   ```console
+   ```bash
    sudo journalctl -u nginx
    sudo journalctl -u php-fpm
    ```
@@ -416,13 +419,13 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
 2. **Permitir el tráfico saliente en SELinux para Nginx:**
 
-   ```console
+   ```bash
    sudo setsebool -P httpd_can_network_connect 1
    ```
 
 3. **Reiniciar Nginx para aplicar los cambios:**
 
-   ```console
+   ```bash
    sudo systemctl restart nginx
    ```
 
@@ -449,7 +452,7 @@ Verifica los logs para asegurarte de que todo funcione correctamente:
 
 2. **Reiniciar Nginx:**
 
-   ```console
+   ```bash
    sudo systemctl restart nginx
    ```
 

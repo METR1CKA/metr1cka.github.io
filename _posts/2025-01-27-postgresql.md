@@ -19,47 +19,51 @@ En este artículo te mostraré de forma muy coloquial cómo instalar y configura
 
 1. **Instalar el repositorio de PostgreSQL:**
 
-   ```console
+   ```bash
    sudo dnf install https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
    ```
 
 2. **Deshabilitar el módulo PostgreSQL por defecto y actualizar repositorios:**
 
-   ```console
+   ```bash
    sudo dnf update -y
    sudo dnf -qy module disable postgresql
    ```
 
 3. **Instalar PostgreSQL (servidor y cliente):**
 
-   ```console
-   # Actualizar repositorios nuevamente
+   - Actualizar repositorios nuevamente
+   ```bash
    sudo dnf update -y
-   
-   # Instalación del servidor local de PostgreSQL 15 y sus contribuciones
+   ```
+
+   - Instalación del servidor local de PostgreSQL 15 y sus contribuciones
+   ```bash
    sudo dnf install postgresql15 postgresql15-server glibc-all-langpacks postgresql15-contrib -y
-   
-   # Instalación del cliente de PostgreSQL 15
+   ```
+
+   - Instalación del cliente de PostgreSQL 15
+   ```bash
    sudo dnf install postgresql15 glibc-all-langpacks -y
    ```
 
 4. **Inicializar la base de datos:**
 
-   ```console
+   ```bash
    sudo dnf update -y
    sudo /usr/pgsql-15/bin/postgresql-15-setup initdb
    ```
 
 5. **Habilitar y arrancar el servicio de PostgreSQL:**
 
-   ```console
+   ```bash
    sudo systemctl enable postgresql-15
    sudo systemctl start postgresql-15
    ```
 
 6. **Instalar el módulo PDO para PostgreSQL (para PHP):**
 
-   ```console
+   ```bash
    sudo dnf install php-pgsql -y
    ```
 
@@ -71,7 +75,7 @@ En este artículo te mostraré de forma muy coloquial cómo instalar y configura
 
 1. **Acceder a la consola de PostgreSQL:**
 
-   ```console
+   ```bash
    sudo -i -u postgres psql
    ```
 
@@ -121,32 +125,32 @@ En este artículo te mostraré de forma muy coloquial cómo instalar y configura
 
 1. **Instalar OpenSSL (si aún no está instalado):**
 
-   ```console
+   ```bash
    sudo dnf install openssl
    ```
 
 2. **Generar certificados SSL:**
 
-   ```console
+   ```bash
    openssl req -new -x509 -days 365 -nodes -text -out server.crt -keyout server.key -subj "/CN={ip-privada-bd}"
    ```
 
 3. **Ajustar permisos de los archivos (opcional):**
 
-   ```console
+   ```bash
    sudo chmod 644 *.crt
    sudo chmod 600 *.key
    ```
 
 4. **Mover los archivos generados a la carpeta de datos de PostgreSQL:**
 
-   ```console
+   ```bash
    sudo mv * /var/lib/pgsql/15/data/
    ```
 
 5. **Cambiar el propietario de los archivos a `postgres:postgres`:**
 
-   ```console
+   ```bash
    sudo chown -R postgres:postgres /var/lib/pgsql/15/data/*
    ```
 
@@ -176,23 +180,23 @@ En este artículo te mostraré de forma muy coloquial cómo instalar y configura
 
 8. **Reiniciar el servicio de PostgreSQL para aplicar los cambios:**
 
-   ```console
+   ```bash
    sudo systemctl restart postgresql-15
    ```
 
 ### 3.2 Conectar a la Base de Datos y Configurar Certificados en el Lado del Cliente
 
-1. **Conectarse a la base de datos desde la consola de PostgreSQL:**
+1. **Conectarse a la base de datos desde la consola de PostgreSQL para verificar la conexión:**
 
-   ```console
-   # Cambiar a usuario postgres y conectar
+   - Cambiar a usuario postgres y conectarse a la base de datos:
+   ```bash
    sudo su - postgres
    psql -h {host} -p {port} -U {userdb} -d {database}
    ```
 
-2. **Conectarse directamente sin cambiar de usuario:**
+2. **Conectarse directamente sin cambiar de usuario para verificar la conexión:**
 
-   ```console
+   ```bash
    sudo -i -u postgres psql -h {host} -p {port} -U {userdb} -d {database}
    ```
 
@@ -200,20 +204,20 @@ En este artículo te mostraré de forma muy coloquial cómo instalar y configura
 
    - **En el servidor de la base de datos (BD):**
 
-     ```console
+     ```bash
      sudo cat /var/lib/pgsql/15/data/server.crt
      ```
 
-   - **En el servidor web:**
+   - **En el servidor web (copiando el contenido del archivo .crt de la BD):**
      
-     ```console
+     ```bash
      mkdir .postgresql && cd .postgresql
      nano root.crt
      ```
      
      Luego, asigna los permisos adecuados:
      
-     ```console
+     ```bash
      sudo chmod 644 *.crt
      sudo setsebool -P httpd_can_network_connect on
      sudo chcon -R -t httpd_sys_rw_content_t /home/{user}/.postgresql
@@ -232,7 +236,8 @@ Configura tu archivo `.env` para conectarte a PostgreSQL:
    DB_DATABASE={database}
    DB_USERNAME={user}
    DB_PASSWORD={password}
-   # Opciones de SSL: "verify-full" para validar todo o "verify-ca" para solo el certificado
+   // Opciones de SSL: "verify-full" para validar todo o "verify-ca" para solo el certificado
+   // Recomendable "Verify-ca" para la practica
    DB_SSLMODE={verify-full / verify-ca}
    ```
    {: file='.env'}

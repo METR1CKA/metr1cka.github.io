@@ -8,5 +8,4 @@ order: 4
 
 - ### 💻 Ingeniero en Desarrollo y Gestión de Software en la Universidad Tecnologica de Torreón
 
-![Coding](https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/code.gif?raw=true "Dev")
-_Soy ese_
+![Coding](https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/code.gif?raw=true)

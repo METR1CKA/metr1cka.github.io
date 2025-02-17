@@ -28,13 +28,13 @@ Algunos ejemplos de cómo se puede acceder a un servidor remoto utilizando SSH s
 #### Terminal
 Puedes acceder con la terminal de la siguiente manera:
 
-```console
+```bash
 ssh {usuario}@{direccion_ip} -p {puerto} -i {ruta_de_la_clave_privada}
 ```
 
 O bien puedes crear un archivo de configuración en `~/.ssh/config` y agregar la siguiente configuración:
 
-```console
+```bash
 Host nombre
   HostName {direccion_ip}
   User {usuario}
@@ -44,7 +44,7 @@ Host nombre
 
 Luego, puedes acceder al servidor con el siguiente comando:
 
-```console
+```bash
 ssh nombre
 ```
 
@@ -60,32 +60,32 @@ Una vez que se haya conectado al servidor remoto, deberá hacer lo siguiente:
 
 1. Actualizar los droplets
 
-    ```console
+    ```bash
     sudo dnf update
     sudo dnf upgrade
     ```
 
     Opcionalmente se puede hacer de esta otra forma:
 
-    ```console
+    ```bash
     dnf update -y && dnf upgrade -y
     ```
 
 2. Reiniciar
 
-    ```console
+    ```bash
     reboot
     ```
 
 3. Instalar nano, vim y net-tools
 
-    ```console
+    ```bash
     dnf install nano vim net-tools -y
     ```
 
 4. Actualizar después de instalar
 
-    ```console
+    ```bash
     dnf update -y && dnf upgrade -y
     ```
 

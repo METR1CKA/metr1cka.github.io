@@ -19,18 +19,18 @@ En este tutorial, vamos a aprender a configurar SSH en dos servidores VPS o drop
 ### Cambio de Puertos
 
 1. Edita el archivo de configuración:
-   ```console
+   ```bash
    nano /etc/ssh/sshd_config
    ```
 
 2. Cambia el puerto para el droplet 1:
-   ```console
+   ```bash
    Port 55113
    ```
    {: file='/etc/ssh/sshd_config'}
 
 3. Cambia el puerto para el droplet 2:
-   ```console
+   ```bash
    Port 60112
    ```
    {: file='/etc/ssh/sshd_config'}
@@ -38,24 +38,24 @@ En este tutorial, vamos a aprender a configurar SSH en dos servidores VPS o drop
 ### Reiniciar el Servicio SSH
 
 1. Reinicia el servicio:
-   ```console
+   ```bash
    systemctl restart sshd
    ```
    
    O alternativamente:
    
-   ```console
+   ```bash
    service sshd restart
    ```
 
 2. Verifica el estado:
-   ```console
+   ```bash
    systemctl status sshd
    ```
    
    O:
    
-   ```console
+   ```bash
    service sshd status
    ```
 
@@ -67,49 +67,49 @@ En este tutorial, vamos a aprender a configurar SSH en dos servidores VPS o drop
 Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Ejecuta estos pasos en ambos droplets:
 
 1. **Crear un usuario:**
-   ```console
+   ```bash
    adduser {usuario}
    ```
 
 2. **Asignar una contraseña:**
-   ```console
+   ```bash
    passwd {usuario}
    ```
 
 3. **Cambiar al usuario para probar el acceso:**
-   ```console
+   ```bash
    su {usuario}
    ```
 
 4. **Ir al directorio home:**
-   ```console
+   ```bash
    cd
    ```
 
 5. **Salir del usuario:**
-   ```console
+   ```bash
    exit
    ```
 
 6. **Comandos extras y/o opcionales**
 
     - **Borrar un usuario:**
-    ```console
+    ```bash
     userdel -r {usuario}
     ```
 
     - **Agregar el usuario al grupo `wheel` para usar `sudo`:**
-    ```console
+    ```bash
     gpasswd -a {usuario} wheel
     ```
 
     - **Eliminar el usuario del grupo `wheel`:**
-    ```console
+    ```bash
     gpasswd -d {usuario} wheel
     ```
 
     - **Asignar el directorio home:**
-    ```console
+    ```bash
     chown -R {usuario}:{usuario} /home/{usuario}
     ```
 
@@ -121,13 +121,13 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 1. **Crear la carpeta `.ssh` y el archivo `authorized_keys` en ambos droplets:**
 
    - Puedes crear la carpeta de `.ssh` dentro del directorio home del usuario:
-   ```console
+   ```bash
    mkdir ~/.ssh
    cd ~/.ssh
    ```
 
    - Otra opción es crear la carpeta de forma personalizada dentro del directorio home del usuario (no recomendado):
-   ```console
+   ```bash
    mkdir ~/{carpeta-personalizada}
    cd ~/{carpeta-personalizada}
    mkdir .ssh
@@ -135,23 +135,23 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
    ```
 
    - Luego crear el archivo `authorized_keys` y copiar la clave pública del usuario:
-   ```console
+   ```bash
    touch authorized_keys
    ```
    {: file='~/ruta_ssh/'}
 
    - Una opción es asignar el contenido del archivo `authorized_keys` de root al que acabas de crear:
-   ```console
+   ```bash
    cat /root/.ssh/authorized_keys > ~/{ruta_ssh}/authorized_keys
    ```
 
    - O copiar el archivo `authorized_keys` de root al nuevo usuario y ajustar los permisos:
-   ```console
+   ```bash
    cp /root/.ssh/authorized_keys ~/{ruta_ssh}/authorized_keys
    ```
 
    - Asigna los permisos adecuados:
-   ```console
+   ```bash
    chmod 700 -R ~/{ruta_ssh}
    chmod 600 ~/{ruta_ssh}/authorized_keys
    ```
@@ -172,7 +172,7 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
    {: file='/etc/ssh/sshd_config'}
 
 3. **Reinicia el servicio SSH:**
-   ```console
+   ```bash
    systemctl restart sshd
    ```
 
@@ -181,22 +181,22 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 1. **Generar la llave SSH en el droplet 1:**
 
    - Ingresa al usuario creado:
-   ```console
+   ```bash
    su {usuario}
    ```
 
    - **(Opcional)** Genera la llave con nombre personalizado:
-   ```console
+   ```bash
    ssh-keygen -f {ruta_ssh/nombre_archivo} -C "{tu-comentario}"
    ```
 
    - Genera la llave por defecto:
-   ```console
+   ```bash
    ssh-keygen -C "{tu-comentario}"
    ```
 
    - Sal de la sesión del usuario y ajusta los permisos:
-   ```console
+   ```bash
    exit
    chmod 644 ~/{ruta_ssh}/nombre_archivo.pub
    chmod 600 ~/{ruta_ssh}/nombre_archivo
@@ -205,22 +205,22 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 2. **Copiar la llave pública al droplet 2:**
 
    - Ingresa al usuario creado:
-   ```console
+   ```bash
    su {usuario}
    ```
 
    - **(Opcional)** Usar ssh-copy-id para copiar la llave
-   ```console
+   ```bash
    ssh-copy-id -i ~/{ruta_ssh}/nombre_archivo.pub {usuario}@{ip_privada_droplet_2}
    ```
 
    - O copiar manualmente, ejecuta cat para mostrar la llave y copia el contenido:
-   ```console
+   ```bash
    cat {ruta_ssh}/nombre_archivo.pub
    ```
 
 3. **Reinicia el servicio SSH:**
-   ```console
+   ```bash
    systemctl restart sshd
    ```
 
@@ -243,7 +243,7 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
    {: file='/etc/ssh/sshd_config'}
 
 2. **Reinicia el servicio en ambos droplets:**
-   ```console
+   ```bash
    systemctl restart sshd
    ```
 
@@ -253,16 +253,16 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 {: .prompt-warning }
 
 1. **Instalar las dependencias necesarias:**
-   ```console
+   ```bash
    dnf install epel-release && dnf update -y
    ```
 
-   ```console
+   ```bash
    dnf install google-authenticator qrencode qrencode-libs
    ```
 
 2. **Generar la llave de Google Authenticator:**
-   ```console
+   ```bash
    google-authenticator -s ~/{ruta_ssh}/google_authenticator
    ```
    
@@ -279,17 +279,17 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
 3. **Realizar respaldos y ajustar SELinux:**
 
    - Restaurar el contexto de SELinux en la carpeta .ssh
-   ```console
+   ```bash
    restorecon -Rv ~/{ruta_ssh}/
    ```
 
    - Respaldar el archivo PAM para sshd
-   ```console
+   ```bash
    cp /etc/pam.d/sshd /etc/pam.d/sshd.bak
    ```
 
    - Respaldar sshd_config
-   ```console
+   ```bash
    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
    ```
 
@@ -323,14 +323,14 @@ Para mayor seguridad, crea un usuario distinto de root para acceder por SSH. Eje
      {: file='/etc/ssh/sshd_config'}
 
 6. **Reinicia el servicio SSH y verifica errores:**
-   ```console
+   ```bash
    sudo journalctl -u sshd
    ```
 
 7. **Prueba el acceso SSH con Google Authenticator:**
 
    Una vez autenticado, prueba la conexión al droplet 2:
-   ```console
+   ```bash
    ssh {usuario}@{ip_privada_droplet_2} -p {puerto_ssh_droplet_2} -i ~/{ruta_ssh}/nombre_archivo
    ```
 
